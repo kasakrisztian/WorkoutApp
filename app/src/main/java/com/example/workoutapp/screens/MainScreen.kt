@@ -13,18 +13,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.workoutapp.screens.destinations.DirectionDestination
+import com.example.workoutapp.screens.destinations.WorkoutsDestination
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.spec.Direction
+import com.ramcosta.composedestinations.spec.DirectionDestinationSpec
 
+@Destination(start = true)
 @Composable
-fun MainScreen(modifier: Modifier) {
+fun MainScreen(
+    navigator: DestinationsNavigator
+) {
     val toastContext = LocalContext.current.applicationContext
+    val modifier: Modifier = Modifier
 
     Scaffold(
-        backgroundColor = Color.DarkGray,
+        backgroundColor = Color(211, 211, 211),
         topBar = {
         TopAppBar(
             title = { Text("App neve") },
             actions = {
                 IconButton(onClick = {
+                    //navigator.navigate()
                     Toast.makeText(toastContext, "Beállítások megnyitása", Toast.LENGTH_LONG ).show()
                 }) {
                     Icon(
@@ -40,9 +52,10 @@ fun MainScreen(modifier: Modifier) {
             modifier = Modifier.fillMaxSize()
         ) {
             Button(colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Green, contentColor = Color.White),
+                backgroundColor = Color(152, 251, 152),
+                contentColor = Color.White),
                 onClick = {
-                Toast.makeText(toastContext, "Aktív edzéstervek megnyitása", Toast.LENGTH_LONG ).show()
+                    Toast.makeText(toastContext, "Aktív edzéstervek megnyitása", Toast.LENGTH_LONG ).show()
             }) {
                 Text(
                     text = "Aktív edzésterv",
@@ -50,28 +63,32 @@ fun MainScreen(modifier: Modifier) {
                 )
             }
             Spacer(modifier = modifier.height(32.dp))
-            Button(colors = ButtonDefaults.buttonColors( backgroundColor = Color.Green, contentColor = Color.White),
+            /*Button(colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color(152, 251, 152),
+                contentColor = Color.White),
                 onClick = {
-                Toast.makeText(toastContext, "Edzéstervek megnyitása", Toast.LENGTH_LONG).show()
+                    navigator.navigate(WorkoutsDestination())
             }) {
                 Text(
                     text = "Edzéstervek",
                     fontSize = 32.sp
                 )
-            }
+            }*/
+            ButtonLayout(
+                navigator = navigator,
+                destination = WorkoutsDestination(),
+                content = "Edzéstervek"
+            )
             Spacer(modifier = modifier.height(32.dp))
-            Button(
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green, contentColor = Color.White),
-                onClick = {
-                Toast.makeText(toastContext, "Naptár megnyitása", Toast.LENGTH_LONG).show()
-            }) {
-                Text(
-                    text = "Naptár",
-                    fontSize = 32.sp
-                )
-            }
+            /*ButtonLayout(
+                navigator = navigator,
+                destination = ,
+                content =
+            )*/
             Spacer(modifier = modifier.height(32.dp))
-            Button(colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green, contentColor = Color.White),
+            Button(colors = ButtonDefaults.buttonColors(
+                backgroundColor =Color(152, 251, 152),
+                contentColor = Color.White),
                 onClick = {
                 Toast.makeText(toastContext, "Előrehaladás megnyitása", Toast.LENGTH_LONG).show()
             }) {
@@ -81,5 +98,25 @@ fun MainScreen(modifier: Modifier) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun ButtonLayout(
+    navigator: DestinationsNavigator,
+    destination: Direction,
+    content: String
+) {
+    Button(colors = ButtonDefaults.buttonColors(
+        backgroundColor = Color(152, 251, 152),
+        contentColor = Color.White
+    ),
+        onClick = {
+            navigator.navigate(destination)
+        }) {
+        Text(
+            text = content,
+            fontSize = 32.sp
+        )
     }
 }

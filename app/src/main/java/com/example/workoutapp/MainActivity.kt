@@ -3,17 +3,22 @@ package com.example.workoutapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.ui.Modifier
-import com.example.workoutapp.screens.MainScreen
+import com.example.workoutapp.screens.NavGraphs
 import com.example.workoutapp.ui.theme.WorkoutAppTheme
+import com.ramcosta.composedestinations.DestinationsNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             WorkoutAppTheme {
-                // A surface container using the 'background' color from the theme
-                MainScreen(modifier = Modifier)
+                DestinationsNavHost(navGraph = NavGraphs.root)
+
+                /*TODO("1 - Edzéstervek képernyő létrehozása")
+                TODO("2 - Edzéstervek gombra rámenve a főmenüben az új képernyő megnyitása")
+                TODO("3 - Feri gyűjtse ki a gyakorlatokról az infókat")
+                TODO("4 - Firebase adatbázis kezelés implementálása")
+                TODO("5 - Edzésterven belül egy új gyakorlat felvételekor kilistázni a gyakorlatokat")*/
             }
         }
     }
